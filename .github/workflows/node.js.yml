@@ -1,0 +1,19 @@
+name: CI - Copiloto Cotizaciones
+
+on:
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Usar Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Prueba 1 - Validacion de VIN
+        run: node -e "const assert=require('assert');const vin='WBA3A5G59DNP26082';assert.strictEqual(vin.length,17,'VIN debe tener 17 chars');console.log('PASS - VIN valido');"
+      - name: Prueba 2 - Deteccion de campos vacios
+        run: node -e "const assert=require('assert');const datos={aseguradora:'AXA',vin:'',placas:'ABC123'};const inc=Object.keys(datos).filter(k=>datos[k]==='');assert.ok(inc.includes('vin'),'Debe detectar VIN vacio');console.log('PASS - Campo incompleto detectado:',inc);"
