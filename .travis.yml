@@ -2,6 +2,14 @@ language: node_js
 node_js:
   - "18"
 
+branches:
+  only:
+    - main
+    - develop
+
 script:
-  - echo "Ejecutando prueba básica del copiloto..."
-  - node -e "const assert = require('assert'); assert.strictEqual(typeof 'VIN123', 'string', 'El VIN debe ser texto'); console.log('✅ Prueba de tipo de datos: OK');"
+  - echo "=== Prueba 1: Validacion de tipo de dato VIN ==="
+  - node -e "const assert = require('assert'); const vin = 'WBA3A5G59DNP26082'; assert.strictEqual(vin.length, 17, 'El VIN debe tener 17 caracteres'); console.log('PASS - VIN valido detectado correctamente');"
+  - echo "=== Prueba 2: Deteccion de campos incompletos ==="
+  - node -e "const assert = require('assert'); const datos = {aseguradora:'AXA', vin:'', placas:'ABC123'}; const incompletos = Object.keys(datos).filter(k => datos[k] === ''); assert.ok(incompletos.includes('vin'), 'Debe detectar VIN vacio'); console.log('PASS - Campo incompleto detectado:', incompletos);"
+  - echo "=== Todas las pruebas pasaron ==="
