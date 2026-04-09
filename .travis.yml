@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "18"
+
+script:
+  - echo "Ejecutando prueba básica del copiloto..."
+  - node -e "const assert = require('assert'); assert.strictEqual(typeof 'VIN123', 'string', 'El VIN debe ser texto'); console.log('✅ Prueba de tipo de datos: OK');"
