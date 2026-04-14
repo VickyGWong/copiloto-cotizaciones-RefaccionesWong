@@ -1,0 +1,62 @@
+{
+  "manifest_version": 2,
+  "name": "Copiloto de Cotizaciones Wong",
+  "version": "0.1",
+  "description": "Asistente para validar vehículos, normalizar piezas y agilizar cotizaciones.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "clipboardWrite",
+    "notifications",
+
+    "https://inpart.audatex.com.mx/*",
+    "https://*.audatex.com.mx/*",
+    "https://qvaluaciones.qualitas.com.mx/*",
+    "https://*.qualitas.com.mx/*",
+    "https://siniestros.chubbnet.com/*",
+
+    "https://www.repuve.gob.mx/*",
+    "https://www.gob.mx/*",
+    "https://www2.repuve.gob.mx/*",
+    "https://www2.repuve.gob.mx:8443/*",
+    "https://aplicacionesc.mat.sat.gob.mx/*",
+    "http://localhost:3000/*",
+    "http://127.0.0.1:3000/*"
+  ],
+  "sidebar_action": {
+    "default_title": "Copiloto Wong",
+    "default_panel": "sidebar.html"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://inpart.audatex.com.mx/*",
+        "*://*.audatex.com.mx/*",
+        "*://qvaluaciones.qualitas.com.mx/*",
+        "*://*.qualitas.com.mx/*",
+        "*://siniestros.chubbnet.com/sie2/*",
+        "*://siniestros.chubbnet.com/SIE2/*",
+        "*://siniestros.chubbnet.com/*",
+        "http://qvaluaciones.qualitas.com.mx/portalQ-web/jsp/appletV2/"
+      ],
+      "js": ["content/extractor.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://aplicacionesc.mat.sat.gob.mx/SOIANET/*"
+      ],
+      "js": ["soia-helper.js"],
+      "run_at": "document_idle"
+    }
+  ],
+ "web_accessible_resources": [
+    "tesseract.min.js",
+    "tesseract.worker.min.js"
+  ]
+}

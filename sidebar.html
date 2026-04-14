@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Copiloto de Cotizaciones Wong</title>
+  <link rel="stylesheet" href="sidebar.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Copiloto Wong 🚗</h1>
+    <small>Versión 0.1 (Beta)</small>
+    <p id="cw-ext-health" class="note note-warning" style="display:none"></p>
+  </header>
+
+  <!-- Navegación entre pestañas -->
+  <nav>
+    <button class="tab active" data-tab="solicitud">Solicitud</button>
+    <button class="tab" data-tab="vehiculo">Vehículo</button>
+    <button class="tab" data-tab="piezas">Piezas</button>
+    <button class="tab" data-tab="cotizacion">Cotización</button>
+  </nav>
+
+  <!-- ============================= -->
+  <!-- PESTAÑA: SOLICITUD            -->
+  <!-- ============================= -->
+  <section id="solicitud" class="tab-content active">
+    <h2>📋 Datos de solicitud</h2>
+    <div class="cw-dates" style="display:flex; gap:10px; align-items:stretch;">
+      <div class="cw-date-box" style="flex:1; min-width:0;">
+        <div class="cw-date-label">Creación</div>
+        <div class="cw-date-value" id="sol-fecha-creacion">—</div>
+      </div>
+
+      <div class="cw-date-box" style="flex:1; min-width:0;">
+        <div class="cw-date-label">Vencimiento</div>
+        <div class="cw-date-value" id="sol-fecha-vencimiento">—</div>
+      </div>
+    </div>
+
+    <div id="datos-solicitud" class="cards">
+      <!-- Grupo: Aseguradora -->
+      <section class="card" role="region" aria-labelledby="hdr-aseg">
+        <h3 id="hdr-aseg">🏢 Aseguradora</h3>
+        <div class="rows">
+          <div class="row">
+            <span class="label">Aseguradora</span>
+            <span class="value" id="aseguradora">—</span>
+          </div>
+          <div class="row">
+            <span class="label">Núm. de siniestro</span>
+            <span class="value" id="siniestro">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grupo: Vehículo -->
+      <section class="card" role="region" aria-labelledby="hdr-veh">
+        <h3 id="hdr-veh">🚗 Vehículo</h3>
+        <div class="rows">
+          <div class="row">
+            <span class="label">VIN / Chasis</span>
+            <span class="value mono" id="vin">—</span>
+          </div>
+          <div class="row">
+            <span class="label">Placas</span>
+            <span class="value" id="placas">—</span>
+          </div>
+          <div class="row">
+            <span class="label">Marca</span>
+            <span class="value" id="marca">—</span>
+          </div>
+          <div class="row">
+            <span class="label">Modelo / Versión</span>
+            <span class="value" id="modelo">—</span>
+          </div>
+          <div class="row">
+            <span class="label">Año</span>
+            <span class="value" id="anio">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grupo: Destino -->
+      <section class="card" role="region" aria-labelledby="hdr-dest">
+        <h3 id="hdr-dest">📍 Destino</h3>
+        <div class="rows">
+          <div class="row">
+            <span class="label">Taller</span>
+            <span class="value" id="taller">—</span>
+          </div>
+          <div class="row">
+            <span class="label">Ciudad</span>
+            <span class="value" id="ciudad">—</span>
+          </div>
+          <div class="row">
+            <span class="label">Estado</span>
+            <span class="value" id="estado">—</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Acciones: 1) Analizar en línea; 2) Limpiar abajo -->
+    <div class="acciones acciones-solicitud">
+      <button id="analizar">🔍 Analizar solicitud</button>
+      <button id="limpiar">Limpiar</button>
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- PESTAÑA: VEHÍCULO             -->
+  <!-- ============================= -->
+  <section id="vehiculo" class="tab-content">
+    <h2>🚘 Datos del vehículo</h2>
+
+    <!-- Tarjeta con los datos leídos del portal -->
+    <div id="datos-vehiculo" class="card">
+      <div class="rows">
+        <div class="row">
+          <span class="label">Placas</span>
+          <span class="value" id="veh-placas">—</span>
+        </div>
+        <div class="row">
+          <span class="label">VIN / Chasis</span>
+          <span class="value mono" id="veh-vin">—</span>
+        </div>
+        <div class="row">
+          <span class="label">Marca</span>
+          <span class="value" id="veh-marca">—</span>
+        </div>
+        <div class="row">
+          <span class="label">Modelo / Versión</span>
+          <span class="value" id="veh-modelo">—</span>
+        </div>
+        <div class="row">
+          <span class="label">Año</span>
+          <span class="value" id="veh-anio">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones principales de acción -->
+    <div class="vehiculo-actions">
+      <div class="buttons-row">
+        <button id="validar-vehiculo" class="btn-vehiculo primary">
+          ✅ Validar vehículo
+        </button>
+        <button id="probar-ocr" class="btn-vehiculo">
+          🖼️ Probar fotos (beta)
+        </button>
+      </div>
+    </div>
+
+    <!-- Tarjeta unificada de validación (semáforo + detalles) -->
+    <section
+      id="vehicle-validation-card"
+      class="card validation-card cw-status-neutral"
+    >
+      <div class="validation-header">
+        <span
+          id="vehicle-validation-badge"
+          class="validation-badge badge-neutral"
+        >
+          Sin validar
+        </span>
+        <h3>Estado general de la validación</h3>
+      </div>
+
+      <p id="vehicle-validation-summary" class="validation-summary">
+        Aún no se ha ejecutado la validación del vehículo.
+      </p>
+
+      <h4 class="validation-subtitle">Validaciones VIN y placas</h4>
+      <ul id="vehicle-validation-details" class="validation-details"></ul>
+      <ul id="vehicle-validation-issues" class="validation-issues"></ul>
+
+      <p id="vehicle-validation-timestamp" class="validation-timestamp">
+        Última validación: —
+      </p>
+    </section>
+
+    <!-- Historial público / REPUVE -->
+    <section id="historial-publico-card" class="card historial-card">
+      <h3>📂 Historial público del vehículo</h3>
+      <div class="btn-row horizontal-buttons">
+        <button id="btn-buscar-historial" class="btn-vehiculo primary">
+          🔎 Buscar historial
+        </button>
+        <button id="btn-abrir-repuve" class="btn-vehiculo">
+          🛡️ Abrir REPUVE
+        </button>
+      </div>
+      <p id="historial-publico-resumen" class="note note-neutral">
+        Usa el VIN para buscar en portales públicos (subastas, historiales,
+        etc.) y apoyar el criterio de importado / nacional.
+      </p>
+      <p id="vision-status" class="note note-neutral">
+        Visión IA: — (aún sin análisis)
+      </p>
+    </section>
+
+    <p id="vehiculo-soia-status" class="vehiculo-note"></p>
+  </section>
+
+  <!-- ============================= -->
+  <!-- PESTAÑA: PIEZAS               -->
+  <!-- ============================= -->
+  <section id="piezas" class="tab-content">
+    <h2>⚙️ Piezas detectadas</h2>
+    <div id="lista-piezas">
+      <p>Sin piezas registradas.</p>
+    </div>
+    <button id="buscar-proveedores">🔧 Buscar disponibilidad</button>
+  </section>
+
+  <!-- ============================= -->
+  <!-- PESTAÑA: COTIZACIÓN           -->
+  <!-- ============================= -->
+  <section id="cotizacion" class="tab-content">
+    <h2>💰 Cotización final</h2>
+    <div id="resumen-cotizacion">
+      <p>Aún no hay resultados.</p>
+    </div>
+    <button id="generar-pdf">🧾 Generar PDF</button>
+  </section>
+
+  <footer>
+    <small>Refacciones Wong © 2025</small>
+  </footer>
+
+  <!-- Carga Tesseract primero -->
+  <script src="tesseract.min.js"></script>
+  <script>
+    // Ruta absoluta del worker dentro de la extensión (Firefox/Chrome)
+    const extApi = window.browser || window.chrome;
+    if (extApi && extApi.runtime && typeof extApi.runtime.getURL === "function") {
+      window.TESSERACT_WORKER = extApi.runtime.getURL("tesseract.worker.min.js");
+    }
+  </script>
+
+  <!-- Lógica principal del sidebar -->
+  <script src="sidebar.js"></script>
+</body>
+</html>
