@@ -105,3 +105,11 @@ Lo anterior no aplica porque la solución se ejecuta localmente dentro del naveg
 
 ```bash
 git clone https://github.com/VickyGWong/copiloto-cotizaciones-RefaccionesWong.git
+```
+## Producto descargable
+
+Como evidencia del producto funcional, el repositorio incluye el paquete instalable de la extensión para Firefox:
+
+**Mozilla Firefox CopilotoWong V1-0.3.3.xpi**
+
+Este archivo puede utilizarse como referencia del producto empaquetado, además del código fuente y la documentación incluida en el repositorio.
