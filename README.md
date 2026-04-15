@@ -44,24 +44,6 @@ La arquitectura del proyecto está basada en una extensión de navegador que tra
 
 > Nota: el diagrama de arquitectura del proyecto se encuentra documentado en la evidencia de la fase 3 y representa el flujo funcional de la extensión, GitHub, tablero de seguimiento y GitHub Actions.
 
-## Tabla de contenidos
-
-- [Descripción](#descripción)
-- [Problema identificado](#problema-identificado)
-- [Solución](#solución)
-- [Arquitectura](#arquitectura)
-- [Tabla de contenidos](#tabla-de-contenidos)
-- [Requerimientos](#requerimientos)
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-- [Uso](#uso)
-  - [Referencia para usuario final](#referencia-para-usuario-final)
-  - [Referencia para usuario administrador](#referencia-para-usuario-administrador)
-- [Contribución](#contribución)
-- [Roadmap](#roadmap)
-- [Demo en video](#demo-en-video)
-- [Tablero público del proyecto](#tablero-público-del-proyecto)
-
 ## Requerimientos
 
 ### Requerimientos técnicos
@@ -95,6 +77,19 @@ Debido a la arquitectura real del proyecto, en esta versión no se requiere:
 
 Lo anterior no aplica porque la solución se ejecuta localmente dentro del navegador y opera directamente sobre los portales autorizados.
 
+## Configuración
+
+La configuración principal del proyecto se realiza a través de los archivos base de la extensión, especialmente `manifest.json`, así como los archivos de lógica y visualización del copiloto.
+
+Entre los elementos principales de configuración se encuentran:
+- permisos de ejecución,
+- dominios autorizados,
+- scripts de extracción de información,
+- archivos del panel lateral,
+- y comportamiento general de la extensión dentro de los portales permitidos.
+
+Para esta versión académica, la configuración se mantiene enfocada en el funcionamiento local de la extensión dentro del navegador.
+
 ## Instalación
 
 ### ¿Cómo instalar el ambiente de desarrollo?
@@ -102,14 +97,74 @@ Lo anterior no aplica porque la solución se ejecuta localmente dentro del naveg
 1. Instalar Git en el equipo local.
 2. Instalar Firefox Developer Edition o un navegador Firefox compatible con pruebas de extensiones.
 3. Clonar el repositorio del proyecto con el siguiente comando:
-
 ```bash
 git clone https://github.com/VickyGWong/copiloto-cotizaciones-RefaccionesWong.git
 ```
+4. Cargar la extensión en Firefox Developer Edition para realizar pruebas locales.
+
+## Uso
+
+La solución está diseñada como una herramienta de apoyo operativo para el área de ventas B2B de Refacciones Wong. Su función es facilitar la lectura de solicitudes, organizar la información visible del caso y reducir tareas manuales previas a la cotización.
+
+### Referencia para usuario final
+
+El usuario final es el agente de ventas o cotizador que trabaja directamente con solicitudes dentro de portales autorizados.
+
+Flujo básico de uso:
+1. Ingresar a un portal autorizado.
+2. Abrir una solicitud de cotización.
+3. Abrir el caso y verificar que la extensión lea la información visible.
+4. Seleccionar el botón de Analizar
+5. Revisar la información organizada en el panel lateral.
+6. Confirmar datos principales del vehículo y de la solicitud.
+8. Integrar la información relevante a la cabecera con el comando de impresión.
+
+### Referencia para usuario administrador
+
+El usuario administrador corresponde al responsable técnico o interno que da mantenimiento al proyecto.
+
+Actividades principales:
+- cargar o actualizar la extensión en el navegador,
+- revisar cambios en los portales para mantener funcional la extracción,
+- validar el estado del repositorio y GitHub Actions,
+- y controlar cambios mediante ramas y pull requests.
+
+## Contribución
+
+Las contribuciones al proyecto deben seguir un flujo controlado para mantener orden y trazabilidad dentro del repositorio.
+
+Pasos básicos de contribución:
+1. Clonar el repositorio.
+2. Crear o utilizar la rama `develop`.
+3. Crear un branch nuevo para la funcionalidad o corrección.
+4. Realizar cambios y validarlos.
+5. Generar commit con un mensaje claro.
+6. Subir la rama al repositorio remoto.
+7. Crear un pull request.
+8. Esperar revisión antes de hacer merge.
+
+## Roadmap
+
+Las mejoras previstas para versiones futuras del proyecto incluyen:
+- validación cruzada con catálogos internos del ERP,
+- fortalecimiento del apoyo para identificación de piezas,
+- mejoras en validación inicial del vehículo,
+- refinamiento visual del panel lateral,
+- y ajustes de compatibilidad ante cambios en portales externos.
+
 ## Producto descargable
 
 Como evidencia del producto funcional, el repositorio incluye el paquete instalable de la extensión para Firefox:
 
 **Mozilla Firefox CopilotoWong V1-0.3.3.xpi**
 
-Este archivo puede utilizarse como referencia del producto empaquetado, además del código fuente y la documentación incluida en el repositorio.
+Este archivo representa la versión empaquetada de la extensión para fines de demostración y evidencia académica.
+
+## Tablero público del proyecto
+
+Inicialmente, el seguimiento del proyecto se realizó mediante Zube, en cumplimiento con la fase previa de administración del trabajo. Sin embargo, para esta entrega final se migró la visualización del avance a Trello, ya que Zube no permitió generar un enlace público accesible para validación externa por parte del evaluador.
+
+El tablero público conserva la lógica de organización del trabajo por funcionalidades, seguridad, pruebas y elementos fuera de alcance de la primera versión.
+
+**Enlace del tablero público:**  
+https://trello.com/b/KVeLJcbQ/copiloto-refacciones-wong 
